@@ -1,16 +1,16 @@
 Weather API Client
 
-*MVVM 
+* MVVM 
 
-*Clean Architecture 
+* Clean Architecture 
 
-*fully Hilt dependency injected 
+* Fully Hilt dependency injected 
 
-*Retrofit network calls to the web interface at weatherapi.com to retrieve weather data 
+* Retrofit network calls to the web interface at weatherapi.com to retrieve weather data 
 
-*Network Call error and exception handling - will display "data not found" and "city not found" to user if incorrect city is passed as a parameter
+* Network Call error and exception handling - will display "data not found" and "city not found" to user if incorrect city is passed as a parameter
 
-*Unit Testing of network calls via OkHttp Mock Server to test JSON deserialization and the app's Retrofit Client
+* Unit Testing of network calls via OkHttp Mock Server to test JSON deserialization and the app's Retrofit Client
 
 Architecture Outline:
 
