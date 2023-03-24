@@ -72,8 +72,6 @@ class WeatherViewModel @Inject constructor(
         getNetworkData()
     }
 
-    
-}
-
 
 }
+
