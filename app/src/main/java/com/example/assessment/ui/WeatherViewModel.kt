@@ -2,6 +2,7 @@ package com.example.assessment.ui
 
 import android.content.Context
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.assessment.data.network.Condition
@@ -31,47 +32,43 @@ class WeatherViewModel @Inject constructor(
         Current("data not found", "data not found", Condition("Data not Found"))
     )
 
-    var result1 = MutableStateFlow<WeatherNetwork>(WeatherNetwork())
-    var result2 = MutableStateFlow<WeatherNetwork>(WeatherNetwork())
-    var result3 = MutableStateFlow<WeatherNetwork>(WeatherNetwork())
-    var result4 = MutableStateFlow<WeatherNetwork>(WeatherNetwork())
-    var result5 = MutableStateFlow<WeatherNetwork>(WeatherNetwork())
+    var netResultList = mutableStateListOf<WeatherNetwork>(
+
+    )
+
+    val cityList = listOf<String>(
+        "Bangalore",
+        "London",
+        "Camden",
+        "Dublin",
+        "Cairo"
+    )
+
+    suspend fun call(city: String): WeatherNetwork {
+        try {
+            return weatherApi.getWeather("${urlPrefix}=${key}&q=${city}")
+        } catch (e: HttpException) {
+            return errorResponse
+        }
+    }
+
 
     fun getNetworkData() {
         viewModelScope.launch(Dispatchers.IO) {
-
-            try {
-                result1.value = weatherApi.getWeather("current.json?key=520916eb3f46442ca1c12926221402&q=visakhapatnam")
-            } catch (e: HttpException) {
-                result1.value = errorResponse
+            for (i in 0..cityList.size-1) {
+                netResultList += call(cityList[i])
             }
-            try {
-                result2.value = weatherApi.getWeather("current.json?key=520916eb3f46442ca1c12926221402&q=london")
-            } catch (e: HttpException) {
-                result2.value = errorResponse
-            }
-            try {
-                result3.value = weatherApi.getWeather("current.json?key=520916eb3f46442ca1c12926221402&q=camden")
-            } catch (e: HttpException) {
-                result3.value = errorResponse
-            }
-            try {
-                result4.value = weatherApi.getWeather("current.json?key=520916eb3f46442ca1c12926221402&q=dublin")
-            } catch (e: HttpException) {
-                result4.value = errorResponse
-            }
-            try {
-                result5.value = weatherApi.getWeather("current.json?key=520916eb3f46442ca1c12926221402&q=cairo")
-            } catch (e: HttpException) {
-                result5.value = errorResponse
-            }
-            }
+        }
     }
 
     init {
         getNetworkData()
     }
 
+    companion object {
+        val key = "520916eb3f46442ca1c12926221402"
+        val urlPrefix = "current.json?key"
+    }
 
 }
 
