@@ -19,7 +19,8 @@ import javax.inject.Singleton
 object ViewModelModule {
 
     @Provides
-    fun ProvidesViewModel(weatherApi: WeatherApi): WeatherViewModel {
+    fun ProvidesViewModel(
+        weatherApi: WeatherApi): WeatherViewModel {
 
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

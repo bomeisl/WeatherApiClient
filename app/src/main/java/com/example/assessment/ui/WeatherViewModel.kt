@@ -1,7 +1,10 @@
 package com.example.assessment.ui
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
+import android.os.Build
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,8 +27,6 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     private val weatherApi: WeatherApi
     ): ViewModel() {
-
-    var internet = NET_CAPABILITY_INTERNET
 
     val errorResponse = WeatherNetwork(
         Location("City not Found"),
@@ -64,6 +65,8 @@ class WeatherViewModel @Inject constructor(
     init {
         getNetworkData()
     }
+
+
 
     companion object {
         val key = "520916eb3f46442ca1c12926221402"

@@ -20,7 +20,7 @@ enum class Routes {
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HostScreen() {
+fun HostScreen(connected: Boolean) {
     val weatherViewModel: WeatherViewModel = viewModel()
     val navHostController: NavHostController = rememberNavController()
 
@@ -33,7 +33,7 @@ fun HostScreen() {
             ) {
 
                 composable(Routes.HOME.name)
-                { HomeScreen(viewModel = weatherViewModel) }
+                { HomeScreen(viewModel = weatherViewModel, connected = connected) }
 
 
 

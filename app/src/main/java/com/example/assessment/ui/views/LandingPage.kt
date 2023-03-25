@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -26,7 +27,8 @@ import com.example.assessment.ui.theme.DarkBlue
 
 @Composable
 fun HomeScreen(
-    viewModel: WeatherViewModel
+    viewModel: WeatherViewModel,
+    connected: Boolean
 ) {
     
 
@@ -35,10 +37,21 @@ fun HomeScreen(
         item{
             Spacer(modifier = Modifier.height(70.dp))
         }
+
+        item {
+            Card() {
+                if (connected) {
+                    Text(text = "Good network connection!")
+                } else {
+                    Text(text = "Network connection lost!")
+                }
+            }
+        }
         
         items(viewModel.netResultList) {
             WeatherCard(results = it)
         }
+
     }
 
 
