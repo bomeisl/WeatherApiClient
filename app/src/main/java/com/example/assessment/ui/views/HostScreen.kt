@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.assessment.ui.DetailsViewModel
 import com.example.assessment.ui.WeatherViewModel
 
 enum class Routes {
@@ -22,6 +23,7 @@ enum class Routes {
 @Composable
 fun HostScreen(connected: Boolean) {
     val weatherViewModel: WeatherViewModel = viewModel()
+    val detailsViewModel: DetailsViewModel = viewModel()
     val navHostController: NavHostController = rememberNavController()
 
     Scaffold(
@@ -32,10 +34,21 @@ fun HostScreen(connected: Boolean) {
                 startDestination = Routes.HOME.name
             ) {
 
-                composable(Routes.HOME.name)
-                { HomeScreen(viewModel = weatherViewModel, connected = connected) }
+                composable(Routes.HOME.name) {
+                    HomeScreen(
+                        viewModel = weatherViewModel,
+                        connected = connected,
+                        navHostController
+                    )
+                }
 
-
+                composable(Routes.DETAILS.name) {
+                    DetailsScreen(
+                        viewModel = detailsViewModel,
+                        connected = connected,
+                        navHostController
+                    )
+                }
 
             }
         }

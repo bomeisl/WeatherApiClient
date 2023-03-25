@@ -7,17 +7,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.assessment.data.network.WeatherNetwork
 import com.example.assessment.ui.WeatherViewModel
 import com.example.assessment.ui.theme.DarkBlue
@@ -26,30 +32,50 @@ import com.example.assessment.ui.theme.DarkBlue
 @Composable
 fun HomeScreen(
     viewModel: WeatherViewModel,
-    connected: Boolean
+    connected: Boolean,
+    navController: NavHostController
 ) {
+
+    val context = LocalContext.current
+
+    val internetConnection = remember {connected}
+
+    LaunchedEffect(key1 = Unit, ) {
+        if (internetConnection) {
+            Toast.makeText(
+                context,
+                "Good Network Connection!",
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            Toast.makeText(
+                context,
+                "Network Connection Lost",
+                Toast.LENGTH_LONG
+            ).show()
+
+
+        }
+    }
     
 
     LazyColumn(
     ) {
         item{
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(100.dp))
         }
 
         item {
-            Card() {
-                if (connected) {
-                    Toast.makeText(LocalContext.current, "Good Network Connection!", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(LocalContext.current, "Network Connection Lost", Toast.LENGTH_LONG).show()
-
-                }
+            Button(onClick = { navController.navigate(Routes.DETAILS.name) }) {
+                Text(text = "Go to Asyncronous Loading")
             }
         }
+
         
         items(viewModel.netResultList) {
             WeatherCard(results = it)
         }
+
 
     }
 
