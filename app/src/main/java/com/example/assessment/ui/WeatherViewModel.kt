@@ -48,7 +48,7 @@ class WeatherViewModel @Inject constructor(
     suspend fun call(city: String): WeatherNetwork {
         try {
             return weatherApi.getWeather("${urlPrefix}=${key}&q=${city}")
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             return errorResponse
         }
     }

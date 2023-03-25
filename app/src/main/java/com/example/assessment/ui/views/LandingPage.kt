@@ -1,23 +1,21 @@
 package com.example.assessment.ui.views
 
-import androidx.compose.foundation.layout.Column
+import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.assessment.data.network.WeatherNetwork
@@ -41,9 +39,10 @@ fun HomeScreen(
         item {
             Card() {
                 if (connected) {
-                    Text(text = "Good network connection!")
+                    Toast.makeText(LocalContext.current, "Good Network Connection!", Toast.LENGTH_LONG).show()
                 } else {
-                    Text(text = "Network connection lost!")
+                    Toast.makeText(LocalContext.current, "Network Connection Lost", Toast.LENGTH_LONG).show()
+
                 }
             }
         }
